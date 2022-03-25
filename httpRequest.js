@@ -27,11 +27,18 @@ const get = (url, params, headers, cookies) => {
         let req = httpRequest.request(options, (res) => {
             res.setEncoding("utf-8");
             if (res.statusCode === 200) {
-                res.on("data", (data) => {
+                let data = "";
+                res.on("data", (chunk) => {
+                    data += chunk;
+                });
+                res.on('end',() => {
                     let cookiesArr = res.headers['set-cookie'];
                     cookies = formatCookies(cookiesArr);
-                    resolve([data, cookies]);
-                });
+                    resolve({
+                        data: data,
+                        cookies: cookies
+                    });
+                })
             } else {
                 reject(res.statusCode);
             }
@@ -68,11 +75,18 @@ const post = (url, params, headers, cookies) => {
         let req = httpRequest.request(options, (res) => {
             res.setEncoding("utf-8");
             if (res.statusCode === 200) {
-                res.on("data", (data) => {
+                let data = "";
+                res.on("data", (chunk) => {
+                    data += chunk;
+                });
+                res.on('end',() => {
                     let cookiesArr = res.headers['set-cookie'];
                     cookies = formatCookies(cookiesArr);
-                    resolve([data, cookies]);
-                });
+                    resolve({
+                        data: data,
+                        cookies: cookies
+                    });
+                })
             } else {
                 reject(res.statusCode);
             }
@@ -110,11 +124,18 @@ const postJSON = (url, params, headers, cookies) => {
         let req = httpRequest.request(options, (res) => {
             res.setEncoding("utf-8");
             if (res.statusCode === 200) {
-                res.on("data", (data) => {
+                let data = "";
+                res.on("data", (chunk) => {
+                    data += chunk;
+                });
+                res.on('end',() => {
                     let cookiesArr = res.headers['set-cookie'];
                     cookies = formatCookies(cookiesArr);
-                    resolve([data, cookies]);
-                });
+                    resolve({
+                        data: data,
+                        cookies: cookies
+                    });
+                })
             } else {
                 reject(res.statusCode);
             }
